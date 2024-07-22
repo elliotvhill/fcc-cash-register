@@ -10,3 +10,21 @@ let cid = [
   ['TWENTY', 60],
   ['ONE HUNDRED', 100]
 ];
+
+const customerCash = document.getElementById("cash");
+const purchaseBtn = document.getElementById("purchase-btn");
+const changeDue = document.getElementById("change-due");
+
+const makeChange = (cash) => {
+    console.log("making change");
+};
+
+const resetRegister = () => {
+    customerCash.value = "";
+    changeDue.textContent = "";
+};
+
+purchaseBtn.addEventListener("click", () => {
+    console.log("purchase button clicked")
+    makeChange();
+});
