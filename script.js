@@ -32,11 +32,12 @@ const makeChange = (cash, price) => {
     if (cash.value < price) {
         registerStatus("noFunds");
         console.log("cash: ", cash.value, "price: ", price);
+        alert("Customer does not have enough money to purchase the item")
     } else if (cash.value > price) {
         registerStatus("open");
         console.log("cash: ", cash.value, "price: ", price);
     } else {
-        registerStatus("closed");
+        changeDue.textContent = "No change due - customer paid with exact cash";
         console.log("cash: ", cash.value, "price: ", price);
     }
 };
