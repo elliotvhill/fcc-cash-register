@@ -1,4 +1,5 @@
 let price = 1.87;
+price = 2.5;
 let cid = [
     ["PENNY", 1.01],
     ["NICKEL", 2.05],
@@ -11,7 +12,7 @@ let cid = [
     ["ONE HUNDRED", 100],
 ];
 
-const customerCash = document.getElementById("cash");
+const cashInput = document.getElementById("cash");
 const purchaseBtn = document.getElementById("purchase-btn");
 const changeDue = document.getElementById("change-due");
 const statusMsg = {
@@ -23,11 +24,21 @@ const statusMsg = {
 const registerStatus = (status) => {
     if (statusMsg[status]) {
         changeDue.textContent = `Status: ${statusMsg[status]}`;
+        console.log("Status: ", statusMsg[status]);
     }
 };
 
-const makeChange = (cash) => {
-    console.log("making change");
+const makeChange = (cash, price) => {
+    if (cash.value < price) {
+        registerStatus("noFunds");
+        console.log("cash: ", cash.value, "price: ", price);
+    } else if (cash.value > price) {
+        registerStatus("open");
+        console.log("cash: ", cash.value, "price: ", price);
+    } else {
+        registerStatus("closed");
+        console.log("cash: ", cash.value, "price: ", price);
+    }
 };
 
 const resetRegister = () => {
@@ -36,7 +47,12 @@ const resetRegister = () => {
 };
 
 purchaseBtn.addEventListener("click", () => {
-    console.log("purchase button clicked");
-    makeChange();
-    registerStatus("open");
+    console.log("customer cash:", cashInput.value);
+    makeChange(cashInput, price);
+});
+
+cashInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        makeChange(cashInput, price);
+    }
 });
