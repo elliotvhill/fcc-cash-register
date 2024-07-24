@@ -36,3 +36,7 @@ button {
     border-radius: 8px;
     padding: 0.5rem;
 }
+
+#change-due {
+    margin: 1rem;
+}
