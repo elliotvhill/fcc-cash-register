@@ -49,57 +49,45 @@ const calculateTotalCid = (cid) => {
 // 6. convert change due into units from original cid array
 
 
+// FUNCTIONAL BUT LIKELY NOT NECESSARY:
+// const convertToCents = (customerCash, price, cashInDrawer) => {
+//     customerCash = parseFloat(cashInput.value).toFixed(2) * 100;
+//     price *= 100;
+//     cashInDrawer *= 100;
+//     console.log("customerCash:", customerCash, "price:", price, "cashInDrawer:", cashInDrawer);
+// };
 
-const convertToCents = (customerCash, price, cashInDrawer) => {
+const isThereEnoughMoney = (customerCash, price, cashInDrawer) => {
     customerCash = parseFloat(cashInput.value).toFixed(2) * 100;
     price *= 100;
     cashInDrawer *= 100;
-    console.log("customerCash:", customerCash, "price:", price, "cashInDrawer:", cashInDrawer);
+    // register doesn't have enough money
+    if (cashInDrawer < customerCash) {
+        registerStatus("noFunds");
+        alert("Register does not have enough money for this transaction.");
+    }
+    // customer doesn't have enough money
+    else if (customerCash < price) {
+        registerStatus("noFunds");
+        alert("Customer does not have enough money to purchase this item.");
+    }
+    // customer uses exact change
+    else if (customerCash == price) {
+        registerStatus("open");
+        changeDue.textContent =
+            "No change due - customer paid with exact cash.";
+    }
+    // customer is owed change
+    else {
+        // calculate customer change due
+        console.log("Customer is owed change.");
+    }
 };
-const isThereEnoughMoney = () => { };
-const calculateCustomerChange = () => { };
-const calculateChangeFromRegister = () => { };
 
-
-
-
-
-/////////////////
-
-// const calculateChange = (cash, price, totalCid) => {
-//     if (cash.value < price) {
-//         registerStatus("noFunds");
-//         console.log("cash: ", cash.value, "price: ", price);
-//         alert("Customer does not have enough money to purchase the item");
-//     } else if (cash.value > price) {
-//         registerStatus("open");
-//         let change = parseFloat(cash.value).toFixed(2) - price;
-//         console.log("cash: ", cash.value, "price: ", price, "change: ", change);
-//         return change;
-//     } else {
-//         changeDue.textContent = "No change due - customer paid with exact cash";
-//         console.log("cash: ", cash.value, "price: ", price);
-//     }
-// }
-
-// const makeChange = (totalCid, cash, changeInCents) => { };
+const calculateCustomerChange = () => {};
+const calculateChangeFromRegister = () => {};
 
 ////////////////////////////
-
-// const calculateChange = (cash, price /* , totalCid */) => {
-//     if (cash.value < price) {
-//         registerStatus("noFunds");
-//         console.log("cash: ", cash.value, "price: ", price);
-//         alert("Customer does not have enough money to purchase the item");
-//     } else if (cash.value > price) {
-//         registerStatus("open");
-//         console.log("cash: ", cash.value, "price: ", price, "change in cents: ", change);
-//     } else {
-//         changeDue.textContent = "No change due - customer paid with exact cash";
-//         console.log("cash: ", cash.value, "price: ", price);
-//     }
-//     return change;
-// };
 
 // const makeChange = (cid, change) => {
 //     // parseInt(change);
@@ -114,7 +102,7 @@ const calculateChangeFromRegister = () => { };
 //     let remainingChange = 0;
 
 //     console.log(typeof (change))
-    
+
 //     for (let i = 0; i < changeArray.length; i++) {
 //         // let changeInt = parseInt(changeArray[i]);
 //         // console.log("current change int:", changeInt);
@@ -134,20 +122,20 @@ const calculateChangeFromRegister = () => { };
 //         return change;
 //     }
 
-    // change (750) / changeArray[0] (10000) < 1 ? YES (0.075)
-    // change (750) / changeArray[1] (9000) < 1 ? YES (0.083)
-    // change (750) / changeArray[2] (6000) < 1 ? YES (0.235)
-    // change (750) / changeArray[3] (5500) < 1 ? YES (0.136)
-    // change (750) / changeArray[4] (2000) < 1 ? YES (0.375)
-    // change (750) / changeArray[5] (425) < 1 ? NO (1.76)
-    // // count: 425
-    // // remaining change to make: change (750) - count (425)
-    // // [remaining] change = 325
-    // change (325) / changeArray[6] (310) < 1 ? NO (1.048)
-    // // count += 310 (735 total)
-    // // remaining change to make: change (750) - count (735)
-    // // [remaining] change = 15
-    // change (15) / changeArray[7] (310) < 1 ? NO (1.048)
+// change (750) / changeArray[0] (10000) < 1 ? YES (0.075)
+// change (750) / changeArray[1] (9000) < 1 ? YES (0.083)
+// change (750) / changeArray[2] (6000) < 1 ? YES (0.235)
+// change (750) / changeArray[3] (5500) < 1 ? YES (0.136)
+// change (750) / changeArray[4] (2000) < 1 ? YES (0.375)
+// change (750) / changeArray[5] (425) < 1 ? NO (1.76)
+// // count: 425
+// // remaining change to make: change (750) - count (425)
+// // [remaining] change = 325
+// change (325) / changeArray[6] (310) < 1 ? NO (1.048)
+// // count += 310 (735 total)
+// // remaining change to make: change (750) - count (735)
+// // [remaining] change = 15
+// change (15) / changeArray[7] (310) < 1 ? NO (1.048)
 // };
 
 const resetRegister = () => {
@@ -157,7 +145,9 @@ const resetRegister = () => {
 
 purchaseBtn.addEventListener("click", () => {
     console.log("customer cash given:", cashInput.value);
-    convertToCents(cash, price, calculateTotalCid(cid));
+    // convertToCents(cash, price, calculateTotalCid(cid)); // functional, not needed
+    isThereEnoughMoney(cash, price, calculateTotalCid(cid));
+    isThereEnoughMoney(cash, price, 10);
     resetRegister();
 });
 
