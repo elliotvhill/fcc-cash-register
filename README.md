@@ -1,6 +1,6 @@
-# Build a Cash Register
+# Certification Project: Build a Cash Register
 
-_[Build a Cash Register](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/#build-a-cash-register-project)_ Project for freeCodeCamp's _JavaScript Algorithms and Data Structures_ certification course.
+Fourth of five required projects for freeCodeCamp's _JavaScript Algorithms and Data Structures_ certification - _[Build a Cash Register](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/#build-a-cash-register-project)_
 
 ##### Project Description
 
