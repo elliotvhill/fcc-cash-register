@@ -57,28 +57,30 @@ const calculateTotalCid = (cid) => {
 //     console.log("customerCash:", customerCash, "price:", price, "cashInDrawer:", cashInDrawer);
 // };
 
+
 const isThereEnoughMoney = (customerCash, price, cashInDrawer) => {
     customerCash = parseFloat(cashInput.value).toFixed(2) * 100;
     price *= 100;
     cashInDrawer *= 100;
     // register doesn't have enough money
     if (cashInDrawer < customerCash) {
-        registerStatus("noFunds");
-        alert("Register does not have enough money for this transaction.");
+        registerStatus("noFunds")
+        changeDue.textContent = `Status: ${statusMsg.noFunds}`;
+        console.log("Register does not have enough money for this transaction.");
     }
     // customer doesn't have enough money
     else if (customerCash < price) {
         registerStatus("noFunds");
-        alert("Customer does not have enough money to purchase this item.");
+        alert("Customer does not have enough money to purchase the item");
     }
     // customer uses exact change
     else if (customerCash == price) {
         registerStatus("open");
-        changeDue.textContent =
-            "No change due - customer paid with exact cash.";
+        changeDue.textContent = `No change due - customer paid with exact cash`;
     }
     // customer is owed change
     else {
+        registerStatus("open");
         // calculate customer change due
         console.log("Customer is owed change.");
     }
@@ -147,8 +149,8 @@ purchaseBtn.addEventListener("click", () => {
     console.log("customer cash given:", cashInput.value);
     // convertToCents(cash, price, calculateTotalCid(cid)); // functional, not needed
     isThereEnoughMoney(cash, price, calculateTotalCid(cid));
-    isThereEnoughMoney(cash, price, 10);
-    resetRegister();
+    // isThereEnoughMoney(cash, price, 10);
+    // resetRegister();
 });
 
 // cashInput.addEventListener("keydown", (e) => {
