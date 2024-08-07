@@ -47,6 +47,7 @@ const calculateTotalCid = (cid) => {
 // 4. calculate change due in cents
 // 5. iterate through cash in drawer (in cents) to find change using minimum cents/bills possible
 // 6. convert change due into units from original cid array
+// 7. if making change empties register -> close register
 
 
 // FUNCTIONAL BUT LIKELY NOT NECESSARY:
@@ -81,13 +82,48 @@ const isThereEnoughMoney = (customerCash, price, cashInDrawer) => {
     // customer is owed change
     else {
         registerStatus("open");
-        // calculate customer change due
-        console.log("Customer is owed change.");
+        const changeOwed = customerCash - price;
+        const changeOwedInDollars = parseFloat((customerCash - price) / 100).toFixed(2);
+        console.log(`Customer is owed change: $${changeOwedInDollars}`);
+        calculateChangeFromRegister(changeOwed, cid); // calculate customer change due
+        // return changeOwed;
     }
 };
 
-const calculateCustomerChange = () => {};
-const calculateChangeFromRegister = () => {};
+const calculateChangeFromRegister = (changeOwed, /* cashInDrawer,  */ cid) => {
+    // if total cashInDrawer (cents) > changeOwed (cents) -- register status: open, calculate change largest to smallest units
+
+    // original cid array sorted desc in cents:
+    const registerChangeArr = [];
+    cid.forEach((element) => {
+        registerChangeArr.push(Math.round(element[1] * 100));
+        registerChangeArr.sort((a, b) => b - a);
+        return registerChangeArr;
+    })
+    console.log(registerChangeArr);
+
+    let changeMade = 0;
+    
+    for (let i = 0; i < registerChangeArr.length; i++) {
+        // is changeOwed / registerChangeArr[i] > , < , or === 1 ?
+        if (changeOwed / registerChangeArr[i] < 1) {
+            console.log(registerChangeArr[i], "smaller change can be made");
+        } else if (changeOwed / registerChangeArr[i] > 1) {
+            console.log("this unit can be used to make change:", registerChangeArr[i]);
+            changeMade += registerChangeArr[i]; // <-- wrong
+            console.log("changeMade: ", changeMade)
+        }
+        ;
+    }
+
+    // if total cashInDrawer (cents) == changeOwed (cents) -- register closed
+    
+};
+
+
+
+
+
 
 ////////////////////////////
 
