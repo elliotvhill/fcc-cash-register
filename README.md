@@ -2,11 +2,13 @@
 
 Fourth of five required projects for freeCodeCamp's _JavaScript Algorithms and Data Structures_ certification - _[Build a Cash Register](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/#build-a-cash-register-project)_
 
-##### Project Description
+## Project Description
 
-> Here you'll build a cash register app that will return change to the customer based on the price of the item, the amount of cash provided by the customer, and the amount of cash in the cash drawer. You'll also need to show different messages to the user in different scenarios, such as when the customer provides too little cash or when the cash drawer doesn't have enough to issue the correct change.
+> _Here you'll build a cash register app that will return change to the customer based on the price of the item, the amount of cash provided by the customer, and the amount of cash in the cash drawer._
 >
-> **Objective:** Build an app that is functionally similar to https://cash-register.freecodecamp.rocks
+> _You'll also need to show different messages to the user in different scenarios, such as when the customer provides too little cash or when the cash drawer doesn't have enough to issue the correct change._
+>
+> _**Objective:** Build an app that is functionally similar to [cash-register.freecodecamp.rocks](https://cash-register.freecodecamp.rocks)_
 
 In the `script.js` file, you have been provided with the `price` and `cid` variables. The `price` variable is the price of the item, and the `cid` variable is the cash-in-drawer, which is a 2D array listing the available currency in the cash drawer.
 
@@ -32,7 +34,7 @@ Your application should show different messages depending on the price of the it
 | Twenty Dollars      | $20 (TWENTY)       |
 | One Hundred Dollars | $100 (ONE HUNDRED) |
 
----
+
 
 ### User Stories:
 
