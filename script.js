@@ -29,8 +29,8 @@ const registerStatus = (status) => {
 };
 
 const calcTotalCid = (arr) => {
-    let currSum = 0
-    let totalCid = 0
+    let currSum = 0;
+    let totalCid = 0;
     for (let i = 0; i < arr.length; i++) {
         currSum += arr[i][1];
         // console.log("current sum: ", currSum);
@@ -39,20 +39,31 @@ const calcTotalCid = (arr) => {
     return console.log("total drawer cash:", totalCid);
 };
 
-const makeChange = (cash, price, totalCid) => {
+const calculateChange = (cash, price, totalCid) => {
     if (cash.value < price) {
         registerStatus("noFunds");
         console.log("cash: ", cash.value, "price: ", price);
-        alert("Customer does not have enough money to purchase the item")
+        alert("Customer does not have enough money to purchase the item");
     } else if (cash.value > price) {
         registerStatus("open");
-        let change = parseFloat(cash.value).toFixed(2) - price; 
+        let change = parseFloat(cash.value).toFixed(2) - price;
         console.log("cash: ", cash.value, "price: ", price, "change: ", change);
         return change;
     } else {
         changeDue.textContent = "No change due - customer paid with exact cash";
         console.log("cash: ", cash.value, "price: ", price);
     }
+};
+
+const makeChange = (cid, change) => {
+    const changeArray = []
+    cid.forEach(element => {
+        changeArray.push(Math.round(element[1] * 100))
+    });
+    return console.log(changeArray);
+
+    // sort desc cid array
+
 };
 
 const resetRegister = () => {
@@ -62,14 +73,12 @@ const resetRegister = () => {
 
 purchaseBtn.addEventListener("click", () => {
     console.log("customer cash:", cashInput.value);
-    // calculate total cash in drawer -- 335.41 √
-    // calcTotalCid(cid);
-    // let totalCid;
-    makeChange(cashInput, price, calcTotalCid(cid));
+    calculateChange(cashInput, price, calcTotalCid(cid));
+    makeChange(cid);
 });
 
 cashInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-        makeChange(cashInput, price);
+        calculateChange(cashInput, price, calcTotalCid(cid));
     }
 });
