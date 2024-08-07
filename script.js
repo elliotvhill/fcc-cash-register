@@ -30,13 +30,13 @@ const registerStatus = (status) => {
 
 const calcTotalCid = (arr) => {
     let currSum = 0
-    let total = 0
+    let totalCid = 0
     for (let i = 0; i < arr.length; i++) {
         currSum += arr[i][1];
-        console.log("current sum: ", currSum);
-        total = parseFloat(currSum).toFixed(2);
+        // console.log("current sum: ", currSum);
+        totalCid = parseFloat(currSum).toFixed(2);
     }
-    return console.log("total drawer cash:", total);
+    return console.log("total drawer cash:", totalCid);
 };
 
 const makeChange = (cash, price, totalCid) => {
@@ -46,7 +46,7 @@ const makeChange = (cash, price, totalCid) => {
         alert("Customer does not have enough money to purchase the item")
     } else if (cash.value > price) {
         registerStatus("open");
-        let change = totalCid - (cash - price); 
+        let change = parseFloat(cash.value).toFixed(2) - price; 
         console.log("cash: ", cash.value, "price: ", price, "change: ", change);
         return change;
     } else {
@@ -63,9 +63,9 @@ const resetRegister = () => {
 purchaseBtn.addEventListener("click", () => {
     console.log("customer cash:", cashInput.value);
     // calculate total cash in drawer -- 335.41 √
-    calcTotalCid(cid);
+    // calcTotalCid(cid);
     // let totalCid;
-    // makeChange(cashInput, price, totalCid);
+    makeChange(cashInput, price, calcTotalCid(cid));
 });
 
 cashInput.addEventListener("keydown", (e) => {
