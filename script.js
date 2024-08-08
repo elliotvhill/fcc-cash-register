@@ -12,6 +12,54 @@ let cid = [ // 335.41
     ["ONE HUNDRED", 100],
 ];
 
+const currencyCounts = [
+    {
+        unit: "penny",
+        value: 0.01,
+        amountInDrawer: 101,
+    },
+    {
+        unit: "nickel",
+        value: 0.05,
+        amountInDrawer: 41,
+    },
+    {
+        unit: "dime",
+        value: 0.1,
+        amountInDrawer: 31,
+    },
+    {
+        unit: "quarter",
+        value: 0.25,
+        amountInDrawer: 17,
+    },
+    {
+        unit: "one",
+        value: 1,
+        amountInDrawer: 90,
+    },
+    {
+        unit: "five",
+        value: 5,
+        amountInDrawer: 11,
+    },
+    {
+        unit: "ten",
+        value: 10,
+        amountInDrawer: 2,
+    },
+    {
+        unit: "twenty",
+        value: 20,
+        amountInDrawer: 3,
+    },
+    {
+        unit: "one hundred",
+        value: 100,
+        amountInDrawer: 1,
+    },
+];
+
 const cashInput = document.getElementById("cash");
 const purchaseBtn = document.getElementById("purchase-btn");
 const changeDue = document.getElementById("change-due");
@@ -41,10 +89,10 @@ const calculateTotalCid = (cid) => {
 
 // STEPS:
 // 0. calculate customer cash, price, cash in drawer in cents √
-// 1. does customer have enough money for price?
-// 2. does customer need change?
-// 3. does register have enough money to make customer's change?
-// 4. calculate change due in cents
+// 1. does customer have enough money for price? √
+// 2. does customer need change? √
+// 3. does register have enough money to make customer's change? √
+// 4. calculate change due in cents √
 // 5. iterate through cash in drawer (in cents) to find change using minimum cents/bills possible
 // 6. convert change due into units from original cid array
 // 7. if making change empties register -> close register
@@ -65,7 +113,7 @@ const isThereEnoughMoney = (customerCash, price, cashInDrawer) => {
     cashInDrawer *= 100;
     // register doesn't have enough money
     if (cashInDrawer < customerCash) {
-        registerStatus("noFunds")
+        registerStatus("noFunds");
         changeDue.textContent = `Status: ${statusMsg.noFunds}`;
         console.log("Register does not have enough money for this transaction.");
     }
@@ -99,21 +147,24 @@ const calculateChangeFromRegister = (changeOwed, /* cashInDrawer,  */ cid) => {
         registerChangeArr.push(Math.round(element[1] * 100));
         registerChangeArr.sort((a, b) => b - a);
         return registerChangeArr;
-    })
+    });
     console.log(registerChangeArr);
 
     let changeMade = 0;
-    
+
     for (let i = 0; i < registerChangeArr.length; i++) {
         // is changeOwed / registerChangeArr[i] > , < , or === 1 ?
         if (changeOwed / registerChangeArr[i] < 1) {
             console.log(registerChangeArr[i], "smaller change can be made");
         } else if (changeOwed / registerChangeArr[i] > 1) {
             console.log("this unit can be used to make change:", registerChangeArr[i]);
+            // +1 count for matching currency unit
+            // how many of each unit is available in cid?
+            // how many of each unit is needed to make change?
+
             changeMade += registerChangeArr[i]; // <-- wrong
-            console.log("changeMade: ", changeMade)
+            console.log("changeMade: ", changeMade);
         }
-        ;
     }
 
     // if total cashInDrawer (cents) == changeOwed (cents) -- register closed
