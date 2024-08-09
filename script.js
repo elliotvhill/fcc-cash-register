@@ -130,15 +130,32 @@ const isThereEnoughMoney = (cashPaid, price, cashInDrawer) => {
 
 
 const makeChange = (cid, changeOwed) => {
+    let cidDesc = cid.toReversed();
+    console.log(cidDesc);
     // object sorted desc from cid array:
-    const registerChangeObj = Object.fromEntries(cid.toReversed());
-    console.log("Change available in register: ", registerChangeObj);
+    // const registerChangeObj = Object.fromEntries(cidDesc);
+    // console.log("Change available in register: ", registerChangeObj);
+
+    const denomValues = [100, 20, 10, 5, 1, 0.25, 0.1, 0.05, 0.01]
+    let changeMade = [];
+    for (let i = 0; i < cidDesc.length; i++) {
+        // check if changeOwed / by each denom < 1
+        while (changeOwed > 0) {
+        let checkDenom = parseFloat(changeOwed / denomValues[i]).toFixed(2);
+        console.log("changeOwed:", changeOwed, "denom value checked:", denomValues[i], "denom check result: ", checkDenom);
+            if (checkDenom > 1) {
+                changeMade.push(cidDesc[i][0])
+            }
+            changeOwed -= parseFloat(cidDesc[i][1]).toFixed(2)
+            console.log("remaining change to make: ", changeOwed)
+            // repeat until changeOwed == 0
+        }
+        return console.log("change made: ", changeMade);
+    };
+    console.log(changeMade);
+
+
     
-    // iterate thru obj denoms
-    // check if changeOwed / by each denom < 1
-    // if so, count of that denom +1
-    // changeOwed - denom value
-    // repeat until changeOwed == 0
     
 
 };
