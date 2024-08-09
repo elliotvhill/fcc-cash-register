@@ -162,16 +162,34 @@ const calculateChangeFromRegister = (changeOwed, /* cashInDrawer,  */ cid) => {
             // how many of each unit is available in cid?
             // how many of each unit is needed to make change?
 
-            changeMade += registerChangeArr[i]; // <-- wrong
-            console.log("changeMade: ", changeMade);
+
+            // changeMade += registerChangeArr[i]; // <-- wrong
+            // console.log("changeMade: ", changeMade);
         }
     }
 
+    
     // if total cashInDrawer (cents) == changeOwed (cents) -- register closed
     
 };
 
 
+
+////////////////////////////
+
+// recursion?
+// const coinsNeededToMakeChange = (units, change) => {
+//     units.forEach((unit) => {
+//         if (unit == change) {
+//             return unit;
+//         } else if (unit > change) {
+//             return;
+//         }
+//         return console.log("unit: ", unit, coinsNeededToMakeChange(units, change - unit));
+//     })
+// };
+
+// coinsNeededToMakeChange(registerChangeArr, changeOwed);
 
 
 
