@@ -98,13 +98,6 @@ const calculateTotalCid = (cid) => {
 // 7. if making change empties register -> close register
 
 
-// FUNCTIONAL BUT LIKELY NOT NECESSARY:
-// const convertToCents = (customerCash, price, cashInDrawer) => {
-//     customerCash = parseFloat(cashInput.value).toFixed(2) * 100;
-//     price *= 100;
-//     cashInDrawer *= 100;
-//     console.log("customerCash:", customerCash, "price:", price, "cashInDrawer:", cashInDrawer);
-// };
 
 
 const isThereEnoughMoney = (customerCash, price, cashInDrawer) => {
@@ -229,20 +222,6 @@ const calculateChangeFromRegister = (changeOwed, /* cashInDrawer,  */ cid) => {
 //         return change;
 //     }
 
-// change (750) / changeArray[0] (10000) < 1 ? YES (0.075)
-// change (750) / changeArray[1] (9000) < 1 ? YES (0.083)
-// change (750) / changeArray[2] (6000) < 1 ? YES (0.235)
-// change (750) / changeArray[3] (5500) < 1 ? YES (0.136)
-// change (750) / changeArray[4] (2000) < 1 ? YES (0.375)
-// change (750) / changeArray[5] (425) < 1 ? NO (1.76)
-// // count: 425
-// // remaining change to make: change (750) - count (425)
-// // [remaining] change = 325
-// change (325) / changeArray[6] (310) < 1 ? NO (1.048)
-// // count += 310 (735 total)
-// // remaining change to make: change (750) - count (735)
-// // [remaining] change = 15
-// change (15) / changeArray[7] (310) < 1 ? NO (1.048)
 // };
 
 const resetRegister = () => {
