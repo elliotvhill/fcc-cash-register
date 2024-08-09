@@ -88,76 +88,92 @@ const calculateTotalCid = (cid) => {
 };
 
 // STEPS:
-// 0. calculate customer cash, price, cash in drawer in cents √
+// 0. calculate customer cash, price, cash in drawer √
 // 1. does customer have enough money for price? √
 // 2. does customer need change? √
 // 3. does register have enough money to make customer's change? √
-// 4. calculate change due in cents √
-// 5. iterate through cash in drawer (in cents) to find change using minimum cents/bills possible
+// 4. calculate change due √
+// 5. iterate through cash in drawer to find change using minimum cents/bills possible
 // 6. convert change due into units from original cid array
 // 7. if making change empties register -> close register
 
 
-const isThereEnoughMoney = (customerCash, price, cashInDrawer) => {
-    // convert customer cash to cents
-    customerCash = parseFloat(cashInput.value).toFixed(2) * 100;
-    // convert item price, register cash to cents
-    price *= 100;
-    cashInDrawer *= 100;
+const isThereEnoughMoney = (cashPaid, price, cashInDrawer) => {
     
     // register doesn't have enough money √
-    if (cashInDrawer < customerCash) {
+    if (cashInDrawer < cashPaid) {
         registerStatus("noFunds");
         changeDue.textContent = `Status: ${statusMsg.noFunds}`;
         console.log("Register does not have enough money for this transaction.");
     }
-
+    
     // customer doesn't have enough money √
-    else if (customerCash < price) {
+    else if (cashPaid < price) {
         registerStatus("noFunds");
         alert("Customer does not have enough money to purchase the item");
     }
     
     // customer uses exact change √
-    else if (customerCash == price) {
+    else if (cashPaid == price) {
         registerStatus("open");
         changeDue.textContent = `No change due - customer paid with exact cash`;
     }
-
+    
     // customer is owed change √
     else {
         registerStatus("open");
-        const changeOwed = customerCash - price;
-        console.log(`Customer is owed change: ${changeOwed} cents`);
-        calculateChangeFromRegister(changeOwed, cid); // calculate customer change due
-        // return changeOwed;
+        const changeOwed = cashPaid - price;
+        console.log(`Customer is owed change: ${changeOwed}`);
+        makeChange(cid, changeOwed);
     }
 };
 
-const calculateChangeFromRegister = (changeOwed, /* cashInDrawer,  */ cid) => {
-    // calculate change largest to smallest units
 
-    // cid array sorted DESC denoms (in cents):
-    const registerChangeArr = cid.toReversed();
-    console.log("Change (cents) in register: ", registerChangeArr);
-    // [10000, 9000, 6000, 5500, 2000, 425, 310, 205, 101]
+const makeChange = (cid, changeOwed) => {
+    // object sorted desc from cid array:
+    const registerChangeObj = Object.fromEntries(cid.toReversed());
+    console.log("Change available in register: ", registerChangeObj);
+    
+    // iterate thru obj denoms
+    // check if changeOwed / by each denom < 1
+    // if so, count of that denom +1
+    // changeOwed - denom value
+    // repeat until changeOwed == 0
+    
+
+};
 
 
-    const changeObject = Object.fromEntries(registerChangeArr)
-    console.log(changeObject);
 
 
+////////////////////////
+
+// const calculateChangeFromRegister = (changeOwed, /* cashInDrawer,  */ cid) => {
+//     // calculate change largest to smallest units
+
+//     // cid array sorted DESC denoms (in cents):
+//     const registerChangeArr = cid.toReversed();
+//     console.log("Change (cents) in register: ", registerChangeArr);
+//     // [10000, 9000, 6000, 5500, 2000, 425, 310, 205, 101]
 
 
+//     // const changeObject = Object.fromEntries(registerChangeArr).flat();
+//     const changeObject = Object.fromEntries(registerChangeArr)
+//     console.log(changeObject);
+
+//     // calculate denom counts in register
+//     const denomValues = [100, 20, 10, 5, 1, 0.25, 0.1, 0.05, 0.01]
+
+//     for (let i = 0; i < denomValues.length; i++) {
+//         if (changeObject / denomValues[i] ) {}
+//     };
 
     // correct change: 1 five, 2 ones, 2 quarters
-
-    // 750 - 425 > 1
-
     
     // if total cashInDrawer (cents) == changeOwed (cents) -- register closed
-    
-};
+// };
+
+////////////////////////
 
 
 
@@ -184,9 +200,8 @@ const resetRegister = () => {
 };
 
 purchaseBtn.addEventListener("click", () => {
-    // console.log("customer cash given:", cashInput.value);
-    isThereEnoughMoney(cash, price, calculateTotalCid(cid));
-    // isThereEnoughMoney(cash, price, 10);
+    console.log(`customer cash paid: ${cashInput.value}; cash on hand: ${calculateTotalCid(cid)}`);
+    isThereEnoughMoney(cashInput.value, price, calculateTotalCid(cid))
 });
 
 // cashInput.addEventListener("keydown", (e) => {
