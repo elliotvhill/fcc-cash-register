@@ -124,15 +124,15 @@ const isThereEnoughMoney = (customerCash, price, cashInDrawer) => {
     else {
         registerStatus("open");
         const changeOwed = customerCash - price;
-        const changeOwedInDollars = parseFloat((customerCash - price) / 100).toFixed(2);
-        console.log(`Customer is owed change: $${changeOwedInDollars}`);
+        console.log(`Customer is owed change: ${changeOwed} cents`);
         calculateChangeFromRegister(changeOwed, cid); // calculate customer change due
         // return changeOwed;
     }
 };
 
 const calculateChangeFromRegister = (changeOwed, /* cashInDrawer,  */ cid) => {
-    // if total cashInDrawer (cents) > changeOwed (cents) -- register status: open, calculate change largest to smallest units
+    // if total cashInDrawer (cents) > changeOwed (cents) -- 
+    // register status: open, calculate change largest to smallest units
 
     // original cid array sorted desc in cents:
     const registerChangeArr = [];
@@ -141,25 +141,9 @@ const calculateChangeFromRegister = (changeOwed, /* cashInDrawer,  */ cid) => {
         registerChangeArr.sort((a, b) => b - a);
         return registerChangeArr;
     });
-    console.log(registerChangeArr);
+    console.log("Change in register: ", registerChangeArr);
 
     let changeMade = 0;
-
-    for (let i = 0; i < registerChangeArr.length; i++) {
-        // is changeOwed / registerChangeArr[i] > , < , or === 1 ?
-        if (changeOwed / registerChangeArr[i] < 1) {
-            console.log(registerChangeArr[i], "smaller change can be made");
-        } else if (changeOwed / registerChangeArr[i] > 1) {
-            console.log("this unit can be used to make change:", registerChangeArr[i]);
-            // +1 count for matching currency unit
-            // how many of each unit is available in cid?
-            // how many of each unit is needed to make change?
-
-
-            // changeMade += registerChangeArr[i]; // <-- wrong
-            // console.log("changeMade: ", changeMade);
-        }
-    }
 
     
     // if total cashInDrawer (cents) == changeOwed (cents) -- register closed
@@ -182,47 +166,8 @@ const calculateChangeFromRegister = (changeOwed, /* cashInDrawer,  */ cid) => {
 //     })
 // };
 
-// coinsNeededToMakeChange(registerChangeArr, changeOwed);
 
 
-
-
-////////////////////////////
-
-// const makeChange = (cid, change) => {
-//     // parseInt(change);
-//     const changeArray = [];
-//     cid.forEach((element) => {
-//         changeArray.push(Math.round(element[1] * 100));
-//     });
-//     changeArray.sort((a, b) => b - a); // sort desc cid array
-//     // return console.log(changeArray);
-
-//     let count = 0;
-//     let remainingChange = 0;
-
-//     console.log(typeof (change))
-
-//     for (let i = 0; i < changeArray.length; i++) {
-//         // let changeInt = parseInt(changeArray[i]);
-//         // console.log("current change int:", changeInt);
-//         // if (change / changeInt > 1) {
-//         //     count += changeInt;
-//         //     console.log("count:", count);
-//         // }
-//         // change -= changeInt;
-//         // console.log("change - changeInt:", change);
-//         // return change;
-//         if (change / changeArray[i] > 1) {
-//             count += changeArray[i];
-//             console.log("count:", count);
-//         }
-//         change -= changeArray[i];
-//         console.log("change - changeInt:", change);
-//         return change;
-//     }
-
-// };
 
 const resetRegister = () => {
     cashInput.value = "";
@@ -230,11 +175,9 @@ const resetRegister = () => {
 };
 
 purchaseBtn.addEventListener("click", () => {
-    console.log("customer cash given:", cashInput.value);
-    // convertToCents(cash, price, calculateTotalCid(cid)); // functional, not needed
+    // console.log("customer cash given:", cashInput.value);
     isThereEnoughMoney(cash, price, calculateTotalCid(cid));
     // isThereEnoughMoney(cash, price, 10);
-    // resetRegister();
 });
 
 // cashInput.addEventListener("keydown", (e) => {
